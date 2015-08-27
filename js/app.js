@@ -20,53 +20,74 @@ app.controller("rootController",['$scope','rootService',function ($scope,rootSer
 
     $scope.executeResult = function (){
         $scope.executeResults = [];
+        $scope.curSumFee = 0;
+        var splitProductObj = rootService.splitProducts($scope.products);
+        /*最小量大于1,必须出现的*/
+        var shouldProducts = splitProductObj.shouldProducts;
+        /*必须参与计算*/
+        var mustProducts = splitProductObj.mustProducts;
+        /*可选计算指标*/
+        var choiceProducts = splitProductObj.choiceProducts;
+        /*首次执行先行运算*/
+        var executeResults = splitProductObj.executeResults;
         var sumFee = $scope.sumFee;
-        var keepFlag = true;
-        while(keepFlag){
-            /*随机确定单品下标*/
-            var productIndex = rootService.getRandom(0,$scope.products.length);
-            /*取出单品*/
-            var product = $scope.products[productIndex];
-            /*获取当前单品最大数量*/
-            var max = rootService.getMaxNum(product,sumFee);
-            /*获取随机数量起始值*/
-            var start = product.productMin > max ? max : product.productMin;
-            /*获取随机数量终止值*/
-            var end = product.productMax > max ? max : product.productMax;
-            /*获取随机单品数*/
-            var random = rootService.getRandom(start,end);
-            var result = {};
-            result.productName = product.productName;
-            result.count = parseInt(random/$scope.products.length);
-            result.max = max;
-            result.sumFee = product.productPrice * random;
-            result.productPrice =product.productPrice;
-
-            var resultSumFee = 0;
-            var has = false;
-            for(var i= 0,len =$scope.executeResults.length;i<len;i++){
-                if($scope.executeResults[i].productName == result.productName){
-                    $scope.executeResults[i].count += result.count;
-                    $scope.executeResults[i].count = $scope.executeResults[i].count > max ? max :$scope.executeResults[i].count;
-                    $scope.executeResults[i].sumFee = $scope.executeResults[i].productPrice * $scope.executeResults[i].count;
-                    has = true;
+        var firstFee = 0;
+        executeResults.forEach(function(element,index,array){
+            firstFee += element.sumFee;
+        });
+        if(sumFee > splitProductObj.allMaxFee){
+            alert("输入的单品量不足以完成额度!");
+            return;
+        }
+        sumFee -= firstFee;
+        var presentFee = 0;
+        if(sumFee <= 0) {
+            alert("指标量与总成本冲突");
+        }else{
+            var keepExecute = true;
+            while(keepExecute) {
+                var canProduct = shouldProducts.concat(choiceProducts);
+                var objIndex = rootService.getRandom(0, canProduct.length);
+                var obj = canProduct[objIndex];
+                /*随机数量*/
+                var objCount = rootService.getRandom(obj.productMin, obj.productMax);
+                var has = false;
+                for (var i = 0; i < executeResults.length; i++) {
+                    if (executeResults[i].productName == obj.productName) {
+                        has = true;
+                        executeResults[i].count += objCount;
+                        executeResults[i].count = executeResults[i].count > executeResults[i].productMax ? executeResults[i].productMax : executeResults[i].count;
+                        executeResults[i].sumFee = executeResults[i].count * executeResults[i].productPrice;
+                    }
                 }
-            }
-            if(!has){
-                $scope.executeResults.push(result);
-            }
+                if (!has) {
+                    var result = {};
+                    result.productName = obj.productName;
+                    result.count = objCount;
+                    result.productPrice = obj.productPrice;
+                    result.max = obj.productMax;
+                    result.min = obj.productMin;
+                    result.sumFee = result.count * result.productPrice;
+                    result.maxFee = result.max * result.productPrice;
+                    executeResults.push(result);
+                }
 
-            $scope.executeResults.forEach(function(element,index,array){
-                resultSumFee += element.sumFee;
-                console.log(element);
-            });
-            keepFlag = resultSumFee - sumFee >= 0 ? false :true;
+                executeResults.forEach(function (ele, index, array) {
+                    presentFee += ele.sumFee;
+                });
+
+                keepExecute = sumFee - presentFee <= 0 ? false : true ;
+            }
+            $scope.executeResults = executeResults;
+            console.log(executeResults);
+            $scope.curSumFee = presentFee ;
+            if(Math.abs($scope.curSumFee - $scope.sumFee) > parseInt($scope.sumFee*10/10000)){
+                $scope.executeResult();
+            }else{
+                console.log("不行");
+            }
         }
-        $scope.curSumFee=resultSumFee;
-        alert(parseInt($scope.sumFee/20));
-        if(Math.abs($scope.curSumFee - $scope.sumFee) > parseInt($scope.sumFee/100)){
-            $scope.executeResult();
-        }
+
     }
 }]);
 
@@ -79,6 +100,46 @@ app.factory("rootService",function(){
        getMaxNum : function (product,sumFee){
            var result = parseInt(sumFee/product.productPrice);
            return result;
+       },
+
+       splitProducts : function (products){
+           var shouldProducts = [];
+           var mustProducts = [];
+           var choiceProducts = [];
+           var executeResults = [];
+           var allMaxFee = 0;
+           for(var i=0;i<products.length;i++){
+               if(products[i].productMin == products[i].productMax){
+                   mustProducts.push(products[i]);
+               }else if(products[i].productMin >= 1){
+                   shouldProducts.push(products[i])
+               }else if(products[i].productMin == 0){
+                   choiceProducts.push(products[i]);
+               }
+
+               if(products[i].productMin >= 1){
+                   var result = {};
+                   result.productName = products[i].productName;
+                   result.count = products[i].productMin;
+                   result.productPrice = products[i].productPrice;
+                   result.max = products[i].productMax;
+                   result.min = products[i].productMin;
+                   result.sumFee = result.count * result.productPrice;
+                   result.maxFee = result.max * result.productPrice;
+                   executeResults.push(result);
+               }
+
+               allMaxFee += products[i].productPrice * products[i].productMax;
+           }
+           var theReturn = {
+               shouldProducts:shouldProducts,
+               mustProducts:mustProducts,
+               choiceProducts:choiceProducts,
+               executeResults:executeResults,
+               allMaxFee:allMaxFee
+           }
+           console.log(theReturn);
+           return theReturn;
        }
    }
    return service;
