@@ -1,0 +1,107 @@
+<div class="row">
+
+    <div class="col-sm-5">
+        <h6 class="foo">已有单品</h6>
+
+        <!-- tags -->
+        <div class="tagcloud style3 margin-30">
+            <a ng-repeat="product in products" href="#" class="tag-link-1" title="2 topics"><span>{{product.productName}} {{product.productPrice}} 元 {{product.productMin}} ~ {{product.productMax}}</span></a>
+        </div>
+        <!--/ tags -->
+    </div>
+
+    <div class="col-sm-10 col-sm-offset-1">
+        <h6 class="foo">运算结果</h6>
+        <div class="pricing_box price_style1 clearfix">
+            <ul>
+                <li class="price_col">
+                    <!--pricing item-->
+                    <div class="price_item">
+                        <div class="inner">
+                            <div class="badge style2"></div>
+                            <div class="price_col_head">
+                                <span class="price"><sup>$</sup><em>99</em><span>/month</span></span>
+                            </div>
+                            <div class="price_col_body clearfix">
+                                <div class="price_body_inner">
+                                    <div class="price_body_top">
+                                        <strong>Basic</strong>
+                                        <span>Lots of clients &amp; users</span>
+                                    </div>
+                                    <ul>
+                                        <li>250 SKU’s</li>
+                                        <li>1 GB Storage</li>
+                                        <li>3,5% transaction fee</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="price_col_foot">
+                                <div class="sign_up"><a href="#" class="btn"><span>Try a Week</span></a></div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--/ pricing-item -->
+                </li>
+
+                <li class="price_col price_col_green col_active">
+                    <!--pricing item-->
+                    <div class="price_item">
+                        <div class="inner">
+                            <div class="badge style2"></div>
+                            <div class="price_col_head">
+                                <span class="price"><sup>$</sup><em>299</em><span>/month</span></span>
+                            </div>
+                            <div class="price_col_body clearfix">
+                                <div class="price_body_inner">
+                                    <div class="price_body_top">
+                                        <strong>Premium</strong>
+                                        <span>Lots of clients  & users</span>
+                                    </div>
+                                    <ul>
+                                        <li>2,500 SKU’s</li>
+                                        <li>5 GB Storage</li>
+                                        <li>1,5% transaction fee</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="price_col_foot">
+                                <div class="sign_up"><a href="#" class="btn btn-green btn-large"><span>保存</span></a></div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--/ pricing-item -->
+                </li>
+
+                <li class="price_col">
+                    <!--pricing item-->
+                    <div class="price_item">
+                        <div class="badge style2"></div>
+                        <div class="inner">
+                            <div class="price_col_head">
+                                <span class="price"><sup>$</sup><em>499</em><span>/month</span></span>
+                            </div>
+                            <div class="price_col_body clearfix">
+                                <div class="price_body_inner">
+                                    <div class="price_body_top">
+                                        <strong>Ultimate</strong>
+                                        <span>Lots of clients &amp; users</span>
+                                    </div>
+                                    <ul>
+                                        <li>Unlimited SKU’s</li>
+                                        <li>20 GB Storage</li>
+                                        <li>1% transaction fee</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="price_col_foot">
+                                <div class="sign_up"><a href="#" class="btn"><span>Subscribe Now</span></a></div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--/ pricing-item -->
+                </li>
+
+            </ul>
+        </div>
+    </div>
+</div>

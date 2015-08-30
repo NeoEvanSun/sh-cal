@@ -1,0 +1,52 @@
+angular.module('cal').factory("rootService",function(){
+    var service={
+        getRandom : function (min, max){
+            return Math.floor(min+Math.random()*(max-min));
+        },
+
+        getMaxNum : function (product,sumFee){
+            var result = parseInt(sumFee/product.productPrice);
+            return result;
+        },
+
+        splitProducts : function (products){
+            var shouldProducts = [];
+            var mustProducts = [];
+            var choiceProducts = [];
+            var executeResults = [];
+            var allMaxFee = 0;
+            for(var i=0;i<products.length;i++){
+                if(products[i].productMin == products[i].productMax){
+                    mustProducts.push(products[i]);
+                }else if(products[i].productMin >= 1){
+                    shouldProducts.push(products[i])
+                }else if(products[i].productMin == 0){
+                    choiceProducts.push(products[i]);
+                }
+
+                if(products[i].productMin >= 1){
+                    var result = {};
+                    result.productName = products[i].productName;
+                    result.count = products[i].productMin;
+                    result.productPrice = products[i].productPrice;
+                    result.max = products[i].productMax;
+                    result.min = products[i].productMin;
+                    result.sumFee = result.count * result.productPrice;
+                    result.maxFee = result.max * result.productPrice;
+                    executeResults.push(result);
+                }
+
+                allMaxFee += products[i].productPrice * products[i].productMax;
+            }
+            var theReturn = {
+                shouldProducts:shouldProducts,
+                mustProducts:mustProducts,
+                choiceProducts:choiceProducts,
+                executeResults:executeResults,
+                allMaxFee:allMaxFee
+            }
+            return theReturn;
+        }
+    }
+    return service;
+});

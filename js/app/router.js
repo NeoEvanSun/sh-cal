@@ -1,0 +1,13 @@
+angular.module('cal').config(function($stateProvider,$urlRouterProvider){
+    $stateProvider
+        .state("product",{
+            url:"/product",
+            templateUrl:'views/product.html',
+            controller:'productController'
+        })
+        .state("executeResults",{
+            url:"/executeResults",
+            templateUrl:'views/results.html',
+            controller:'resultController'
+        })
+})

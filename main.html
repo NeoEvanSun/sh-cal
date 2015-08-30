@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>预算</title>
+    <link href="css/bootstrap.css" media="screen" rel="stylesheet">
+    <link href="style.css" media="screen" rel="stylesheet">
+</head>
+<body ng-app="cal">
+    <div class="container" ng-controller="rootController">
+        <div class="content " role="main">
+            <!--导航-->
+            <div class="row">
+                <div class="col-sm-6 col-sm-offset-1">
+                    <!-- Website Menu -->
+                    <div id="topmenu">
+                        <ul class="dropdown clearfix gradient">
+                            <li class="menu-level-0"><a ui-sref="product"><span>单品管理</span></a></li>
+                            <li class="menu-level-0"><a ui-sref="executeResults"><span>账单管理</span></a></li>
+                        </ul>
+                    </div>
+                    <!--/ Website Menu -->
+                </div>
+            </div>
+        </div>
+        <div ui-view></div>
+    </div>
+</body>
+<script type="text/javascript" src="js/jquery-1.11.3.js"></script>
+<script type="text/javascript" src="js/angular.js"></script>
+<script type="text/javascript" src="js/angular-ui-router.js"></script>
+<script type="text/javascript" src="js/app/init.js"></script>
+<script type="text/javascript" src="js/app/controller.js"></script>
+<script type="text/javascript" src="js/app/services.js"></script>
+<script type="text/javascript" src="js/app/router.js"></script>
+</html>
