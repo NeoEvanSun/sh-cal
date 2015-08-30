@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link href="css/bootstrap.css" media="screen" rel="stylesheet">
+    <link href="style.css" media="screen" rel="stylesheet">
+</head>
+<body>
+<div class="container">
+    <!-- content -->
+    <div class="content " role="main">
+        <!--导航-->
+        <div class="row">
+            <div class="col-sm-6 col-sm-offset-1">
+                <h6 class="foo">Website Menu with dropdown submenu</h6>
+
+                <!-- Website Menu -->
+                <div id="topmenu">
+                    <ul class="dropdown clearfix gradient">
+                        <li class="menu-level-0"><a href="#"><span>Home</span></a></li>
+                        <li class="menu-level-0"><a href="#"><span>About</span></a>
+                            <ul class="submenu-1">
+                                <li class="menu-level-1"><a href="#">Web design</a></li>
+                                <li class="menu-level-1"><a href="#">User interface</a></li>
+                                <li class="menu-level-1"><a href="#">Social media</a>
+                                    <ul class="submenu-2">
+                                        <li class="menu-level-2"><a href="#">Gallery images</a></li>
+                                        <li class="menu-level-2"><a href="#">OneByOne Slider</a></li>
+                                        <li class="menu-level-2"><a href="#">Video in header</a></li>
+                                        <li class="menu-level-2"><a href="#">Video Slider</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="menu-level-0"><a href="#"><span>Contacts</span></a></li>
+                    </ul>
+                </div>
+                <!--/ Website Menu -->
+            </div>
+        </div>
+        <!--导航结束-->
+        <!--单品-->
+        <div class="row">
+            <div class="col-sm-5 col-sm-offset-1">
+                <h6 class="foo">Contact Form</h6>
+
+                <!-- Contact form -->
+                <div class="add-comment styled boxed boxed-cream" id="addcomments">
+                    <span class="add-comment-close">&times;</span>
+                    <div class="add-comment-title gradient"><h3>Write a message</h3></div>
+                    <div class="comment-form">
+                        <form action="#" method="post" id="commentForm" class="ajax_form">
+                            <div class="form-inner">
+                                <div class="field_text">
+                                    <label for="subject" class="label_title">Subject:</label>
+                                    <input type="text" name="subject" id="subject" value="" placeholder="ex. Happy New Year!" class="inputtext input_middle required" />
+                                </div>
+                                <div class="clear"></div>
+                                <div class="field_text field_textarea">
+                                    <div id="edit_buttons" class="edit_buttons gradient"></div>
+                                    <label for="styled_message" class="label_title">Message:</label>
+                                    <textarea cols="30" rows="10" name="styled_message" id="styled_message" class="textarea textarea_middle"></textarea>
+                                </div>
+                                <div class="clear"></div>
+                            </div>
+
+                            <div class="rowSubmit">
+                                <a onclick="document.getElementById('commentForm').reset();return false" href="#" class="link-reset btn btn-white"><span>Discard</span></a>
+                                <span class="btn"><input type="submit" id="send" value="Send" /></span>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm-3">
+                <h6 class="foo">Tags</h6>
+
+                <!-- tags -->
+                <div class="tagcloud style3 margin-30">
+                    <a href="#" class="tag-link-1" title="2 topics"><span>Download</span></a>
+                    <a href="#" class="tag-link-2" title="3 topics"><span>Menu</span></a>
+                    <a href="#" class="tag-link-7" title="6 topics"><span>Imagination</span></a>
+                    <a href="#" class="tag-link-3" title="5 topics"><span>Web</span></a>
+                    <a href="#" class="tag-link-4" title="8 topics"><span>Pattern</span></a>
+                    <a href="#" class="tag-link-8" title="8 topics"><span>Magazine</span></a>
+                </div>
+                <!--/ tags -->
+            </div>
+        </div>
+
+        <!--单品-->
+        <!--计算结果-->
+        <div class="row">
+            <div class="col-sm-10 col-sm-offset-1">
+                <h6 class="foo">Pricing Tables/Boxes</h6>
+                <div class="pricing_box price_style1 clearfix">
+                    <ul>
+                        <li class="price_col">
+                            <!--pricing item-->
+                            <div class="price_item">
+                                <div class="inner">
+                                    <div class="badge style2"></div>
+                                    <div class="price_col_head">
+                                        <span class="price"><sup>$</sup><em>99</em><span>/month</span></span>
+                                    </div>
+                                    <div class="price_col_body clearfix">
+                                        <div class="price_body_inner">
+                                            <div class="price_body_top">
+                                                <strong>Basic</strong>
+                                                <span>Lots of clients &amp; users</span>
+                                            </div>
+                                            <ul>
+                                                <li>250 SKU’s</li>
+                                                <li>1 GB Storage</li>
+                                                <li>3,5% transaction fee</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="price_col_foot">
+                                        <div class="sign_up"><a href="#" class="btn"><span>Try a Week</span></a></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--/ pricing-item -->
+                        </li>
+
+                        <li class="price_col price_col_green col_active">
+                            <!--pricing item-->
+                            <div class="price_item">
+                                <div class="inner">
+                                    <div class="badge style2"></div>
+                                    <div class="price_col_head">
+                                        <span class="price"><sup>$</sup><em>299</em><span>/month</span></span>
+                                    </div>
+                                    <div class="price_col_body clearfix">
+                                        <div class="price_body_inner">
+                                            <div class="price_body_top">
+                                                <strong>Premium</strong>
+                                                <span>Lots of clients  & users</span>
+                                            </div>
+                                            <ul>
+                                                <li>2,500 SKU’s</li>
+                                                <li>5 GB Storage</li>
+                                                <li>1,5% transaction fee</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="price_col_foot">
+                                        <div class="sign_up"><a href="#" class="btn btn-green btn-large"><span>保存</span></a></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--/ pricing-item -->
+                        </li>
+
+                        <li class="price_col">
+                            <!--pricing item-->
+                            <div class="price_item">
+                                <div class="badge style2"></div>
+                                <div class="inner">
+                                    <div class="price_col_head">
+                                        <span class="price"><sup>$</sup><em>499</em><span>/month</span></span>
+                                    </div>
+                                    <div class="price_col_body clearfix">
+                                        <div class="price_body_inner">
+                                            <div class="price_body_top">
+                                                <strong>Ultimate</strong>
+                                                <span>Lots of clients &amp; users</span>
+                                            </div>
+                                            <ul>
+                                                <li>Unlimited SKU’s</li>
+                                                <li>20 GB Storage</li>
+                                                <li>1% transaction fee</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="price_col_foot">
+                                        <div class="sign_up"><a href="#" class="btn"><span>Subscribe Now</span></a></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--/ pricing-item -->
+                        </li>
+
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<script type="text/javascript" src="js/jquery-1.11.3.js"></script>
+<script type="text/javascript" src="js/angular.js"></script>
+
+</html>
