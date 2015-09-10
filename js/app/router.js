@@ -10,4 +10,9 @@ angular.module('cal').config(function($stateProvider,$urlRouterProvider){
             templateUrl:'views/results.html',
             controller:'resultController'
         })
+        .state("productList",{
+            url:"/productList",
+            templateUrl:'views/productList.html',
+            controller:'productController'
+        })
 })
