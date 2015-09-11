@@ -1,2 +1,2 @@
-var app = angular.module('cal',['ui.router','ui.bootstrap']);
+var app = angular.module('cal',['ui.router','ui.bootstrap','ngMessages']);
 

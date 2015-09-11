@@ -1,55 +1,43 @@
-<div class="row">
-    <div class="col-sm-5 col-sm-offset-1">
-        <h6 class="foo">单品管理</h6>
-
-        <!-- Contact form -->
-        <div class="add-comment styled boxed boxed-cream" id="addcomments">
-            <span class="add-comment-close">&times;</span>
-            <div class="add-comment-title gradient"><h3>添加一个单品</h3></div>
-            <div class="comment-form">
-                <form  class="ajax_form" ng-submit="addProduct()">
-                    <div class="form-inner">
-                        <div class="field_text">
-                            <label class="label_title">单品名称:</label>
-                            <input ng-model="productName" type="text" name="subject"  value="" placeholder="输入单品名称" class="inputtext input_middle required" />
-                        </div>
-                        <div class="field_text">
-                            <label  class="label_title">单品单价:</label>
-                            <input ng-model="productPrice" type="text" name="subject"  value="" placeholder="输入单品价格" class="inputtext input_middle required" />
-                        </div>
-                        <div class="clear"></div>
-                        <div class="field_text">
-                            <label  class="label_title">最少数量:</label>
-                            <input ng-model="productMin" type="text" name="subject"  value="" placeholder="输入数字" class="inputtext input_middle required" />
-                        </div>
-                        <div class="field_text">
-                            <label  class="label_title">最大数量:</label>
-                            <input ng-model="productMax" type="text" name="subject"  value="" placeholder="输入数字" class="inputtext input_middle required" />
-                        </div>
-                        <div class="clear"></div>
+<div class="add-comment styled boxed boxed-cream" id="addcomments">
+    <span class="add-comment-close" ng-click="cancel()">&times;</span>
+    <div class="add-comment-title gradient"><h3>添加一个单品</h3></div>
+    <div class="comment-form">
+        <form  class="ajax_form" novalidate ng-submit="addProduct()" name="product_form">
+            <div class="form-inner">
+                <div class="field_text">
+                    <label class="label_title">单品名称:</label>
+                    <input ng-model="productName" type="text" name="productName"  value="" placeholder="输入单品名称" class="inputtext input_middle required" required ng-minlength="2" ng-maxlength="20"/>
+                    <div ng-messages="product_form.$dirty && product_form.productName.$error" class="form_error">
+                        <div ng-message="required">请输入单品名称</div>
                     </div>
-
-                    <div class="rowSubmit">
-                        <a  href="#" class="link-reset btn btn-white" ><span>取消</span></a>
-                        <span class="btn"><input type="submit" id="send" value="添加" /></span>
+                </div>
+                <div class="field_text">
+                    <label  class="label_title">单品单价:</label>
+                    <input ng-model="productPrice" type="number" name="productPrice"  value="" placeholder="输入单品价格" class="inputtext input_middle required" required/>
+                </div>
+                <div class="clear"></div>
+                <div class="field_text">
+                    <label  class="label_title">最少数量:</label>
+                    <input ng-model="productMin" type="number" name="productMin"  value="" placeholder="输入数字" class="inputtext input_middle required" required/>
+                    <div ng-messages="product_form.$dirty && product_form.productMin.$error" class="form_error">
+                        <div ng-message="required">请输入最少数量</div>
                     </div>
-                </form>
+                </div>
+                <div class="field_text">
+                    <label  class="label_title">最大数量:</label>
+                    <input ng-model="productMax" type="number" name="productMax"  value="" placeholder="输入数字" class="inputtext input_middle required" required/>
+                    <div ng-messages="product_form.$dirty && product_form.productMax.$error" class="form_error">
+                        <div ng-message="required">请输入最大数量</div>
+                    </div>
+                </div>
+                <div class="clear"></div>
             </div>
-        </div>
-    </div>
 
-    <div class="col-sm-5">
-        <h6 class="foo">已有单品</h6>
-
-        <!-- tags -->
-        <div class="tagcloud style3 margin-30">
-            <a ng-repeat="product in products" href="#" class="tag-link-1" title="2 topics"><span>{{product.productName}} {{product.productPrice}} 元 {{product.productMin}} ~ {{product.productMax}}</span></a>
-        </div>
-        <!--/ tags -->
+            <div class="rowSubmit">
+                <a  href="#" class="link-reset btn btn-white" ng-click="cancel()"><span>取消</span></a>
+                <span class="btn"><input type="submit" id="send" value="添加"/></span>
+            </div>
+        </form>
     </div>
 </div>
-<div class="row">
-    <div class="col-sm-5 col-sm-offset-1">
-        <span class="btn"><input type="button" value="开始计算"/></span>
-    </div>
-</div>
+

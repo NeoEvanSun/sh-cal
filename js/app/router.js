@@ -1,10 +1,5 @@
 angular.module('cal').config(function($stateProvider,$urlRouterProvider){
     $stateProvider
-        .state("product",{
-            url:"/product",
-            templateUrl:'views/product.html',
-            controller:'productController'
-        })
         .state("executeResults",{
             url:"/executeResults",
             templateUrl:'views/results.html',
@@ -13,6 +8,11 @@ angular.module('cal').config(function($stateProvider,$urlRouterProvider){
         .state("productList",{
             url:"/productList",
             templateUrl:'views/productList.html',
-            controller:'productController'
+            controller:'productListController'
+        })
+        .state("sumCount",{
+            url:"/sumCount",
+            templateUrl:'views/sumCount.html',
+            controller:'sumCountController'
         })
 })

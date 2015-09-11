@@ -6,7 +6,7 @@
     <link href="css/bootstrap.css" media="screen" rel="stylesheet">
     <link href="style.css" media="screen" rel="stylesheet">
 </head>
-<body ng-app="cal">
+<body ng-app="cal" onselectstart="return false">
     <div class="container" ng-controller="rootController">
         <div class="content " role="main">
             <!--导航-->
@@ -16,8 +16,8 @@
                     <div id="topmenu">
                         <ul class="dropdown clearfix gradient">
                             <li class="menu-level-0"><a ui-sref="productList"><span>第 1 步</span></a></li>
-                            <li class="menu-level-0"><a ui-sref="executeResults"><span>第 2 步</span></a></li>
-                            <li class="menu-level-0"><a ui-sref="product"><span>第 3 步</span></a></li>
+                            <li class="menu-level-0"><a ui-sref="sumCount"><span>第 2 步</span></a></li>
+                            <li class="menu-level-0"><a ui-sref="executeResults"><span>第 3 步</span></a></li>
                         </ul>
                     </div>
                     <!--/ Website Menu -->
@@ -30,6 +30,7 @@
 <script type="text/javascript" src="js/jquery-1.11.3.js"></script>
 <script type="text/javascript" src="js/angular.js"></script>
 <script type="text/javascript" src="js/angular-ui-router.js"></script>
+<script type="text/javascript" src="js/angular-messages.js"></script>
 <script type="text/javascript" src="js/ui-bootstrap-tpls-0.13.0.js"></script>
 <script type="text/javascript" src="js/app/init.js"></script>
 <script type="text/javascript" src="js/app/controller.js"></script>

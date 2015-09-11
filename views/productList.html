@@ -1,6 +1,34 @@
-<div>
-    product list
-    <div class="row text-center">
-            <span class="btn"><input type="button" value="下一步"/></span>
+<div class="row">
+    <div class="box-content productList">
+        <table class="table table-striped ">
+            <thead>
+            <tr>
+                <th>单品名称</th>
+                <th>单品价格</th>
+                <th>最大数量</th>
+                <th>最小数量</th>
+                <th>操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="product in productList">
+                <td>{{product.productName}}</td>
+                <td class="center">
+                    <span class="label label-success">{{product.productPrice}}</span>
+                </td>
+                <td class="center">{{product.productMax}}</td>
+                <td class="center">{{product.productMin}}</td>
+                <td>
+                    <a href="#" class="tag-link-1" title="2 topics"><span>edit</span></a>
+                    <a href="#" class="tag-link-2" title="3 topics"><span>delete</span></a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
     </div>
+</div>
+
+<div class="row text-center">
+    <span class="btn"><input type="button" value="添加单品" ng-click="open()"/></span>
+    <span class="btn"><input type="button" value="下一步"/></span>
 </div>
