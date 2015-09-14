@@ -25,9 +25,14 @@
             </div>
         </div>
         <div ui-view></div>
+        <input type="text" ng-model="testTitle"/>
+        <search-chart top-title="testTitle"></search-chart>
     </div>
+
 </body>
 <script type="text/javascript" src="js/jquery-1.11.3.js"></script>
+<script type="text/javascript" src="js/highcharts.js"></script>
+<script type="text/javascript" src="js/exporting.js"></script>
 <script type="text/javascript" src="js/angular.js"></script>
 <script type="text/javascript" src="js/angular-ui-router.js"></script>
 <script type="text/javascript" src="js/angular-messages.js"></script>
@@ -35,5 +40,6 @@
 <script type="text/javascript" src="js/app/init.js"></script>
 <script type="text/javascript" src="js/app/controller.js"></script>
 <script type="text/javascript" src="js/app/services.js"></script>
+<script type="text/javascript" src="js/app/directive.js"></script>
 <script type="text/javascript" src="js/app/router.js"></script>
 </html>

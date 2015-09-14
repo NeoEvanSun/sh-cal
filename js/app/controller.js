@@ -3,6 +3,8 @@ app.controller("rootController",['$scope','$modal','$log','$rootScope',function(
     $rootScope.products = [{productName:'单品1',productPrice:12,productMax:40,productMin:1},
         {productName:'单品2',productPrice:17,productMax:60,productMin:60},
         {productName:'单品3',productPrice:26,productMax:70,productMin:1}];
+
+    $scope.testTitle = "试试";
 }]);
 
 
