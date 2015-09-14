@@ -25,8 +25,8 @@
             </div>
         </div>
         <div ui-view></div>
-        <input type="text" ng-model="testTitle"/>
-        <search-chart top-title="testTitle"></search-chart>
+        {{productNames | json}}
+        <div search-chart top-title="testTitle" my-val="productNames"></div>
     </div>
 
 </body>

@@ -1,15 +1,15 @@
 var app = angular.module('cal');
 app.directive('searchChart',function(){
-    console.log("123");
    return {
        restrict:'EA',
-       template:'<div style="min-width: 310px; max-width: 800px; height: 400px; margin: 0 auto"></div>',
+       template:'<div style="min-width: 310px; max-width: 600px; height: 400px; margin: 0 auto;"></div>',
        scope:{
-            topTitle:"="
+            topTitle:"=",
+            myVal:"="
        },
-       controller:function($scope, $element, $attrs, $transclude){
-           console.log($scope.topTitle);
-           $scope.$watch("topTitle",function(newVal,oldVal){
+       link:function($scope, $element, $attrs){
+           console.log($scope.myVal);
+           $scope.$watch("myVal",function(newVal,oldVal){
                console.log(newVal);
                $scope.draw();
            });
@@ -20,13 +20,13 @@ app.directive('searchChart',function(){
                        type: 'bar'
                    },
                    title: {
-                       text: 'Historic World Population by Region'
+                       text: '商品总额支出预算计算器'
                    },
                    subtitle: {
-                       text: 'Source: <a href="https://en.wikipedia.org/wiki/World_population">'+$scope.topTitle+'</a>'
+                       text: 'Source: <a>'+$scope.topTitle+'</a>'
                    },
                    xAxis: {
-                       categories: ['Africa', 'America', 'Asia', 'Europe', 'Oceania'],
+                       categories: $scope.myVal,
                        title: {
                            text: null
                        }
