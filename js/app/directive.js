@@ -66,13 +66,13 @@ app.directive('searchChart',function(){
                        enabled: false
                    },
                    series: [{
-                       name: 'Year 1800',
+                       name: '单价',
                        data: [107, 31, 635, 203, 2]
                    }, {
-                       name: 'Year 1900',
+                       name: '数量',
                        data: [133, 156, 947, 408, 6]
                    }, {
-                       name: 'Year 2012',
+                       name: '占用额度',
                        data: [1052, 954, 4250, 740, 38]
                    }]
                });

@@ -572,6 +572,9 @@ h6.foo{
     right: -7px;
     z-index: 3;
 }
+.price_col.col_active{
+	transition:all cubic-bezier(0.250,0.460,0.450,0.940) 0.8s;
+}
 .price_col.col_active .badge{display: block;}
 .pricing_box ul {text-align: center;}
 
@@ -2697,3 +2700,4 @@ div.productEdit .modal-content {
 	color: red;
 	font-weight: bold;
 }
+

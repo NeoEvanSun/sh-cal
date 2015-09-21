@@ -1,37 +1,33 @@
 <div class="row">
     <div class="col-sm-5">
-        <h6 class="foo">总价:{{sumCount}}</h6>
+        <Strong class="foo">总价:{{sumCount}} 元</Strong>
         <h6 class="foo">已有单品</h6>
         <div class="tagcloud style3 margin-30">
             <a ng-repeat="product in products" href="#" class="tag-link-1" title="2 topics"><span>{{product.productName}} {{product.productPrice}} 元 {{product.productMin}} ~ {{product.productMax}}</span></a>
         </div>
     </div>
-    <a class="btn" ng-click="executeResult()"><span >计算</span></a>
+    <a class="btn" ng-click="executeSerTimes()"><span >计算</span></a>
 
     <div class="pricing_box price_style1 clearfix">
         <ul>
-            <li class="price_col price_col_green col_active">
+            <li ng-repeat="exeResult in executeArray" class="price_col price_col_green" ng-class="{col_active:hover}" ng-mouseenter="hover=true" ng-mouseleave="hover=false">
                 <div class="price_item">
                     <div class="inner">
                         <div class="badge style2"></div>
                         <div class="price_col_head">
-                            <span class="price"><sup>￥</sup><em>{{curSumFee}}</em><span></span></span>
+                            <span class="price"><sup>￥</sup><em>{{exeResult.curSumFee}}</em><span></span></span>
                         </div>
                         <div class="price_col_body clearfix">
-                            <div class="price_body_inner" ng-repeat="result in executeResults">
+                            <div class="price_body_inner" ng-repeat="result in exeResult.executeResults">
                                 <div class="price_body_top">
-                                    <strong>{{result.productName}}</strong>
-                                    <span>{{result.sumFee}}</span>
+                                    <span>{{result.productName}} * {{result.count}} 个 ＝ {{result.sumFee}} 元</span>
                                 </div>
                                 <ul>
-                                    <li >
-                                        ￥ {{result.productPrice}} 个数{{result.count}}
-                                    </li>
                                 </ul>
                             </div>
                         </div>
                         <div class="price_col_foot">
-                            <div class="sign_up"><a href="#" class="btn btn-green btn-large"><span>保存</span></a></div>
+                            <div class="sign_up"><a  class="btn btn-green btn-large" ng-click="executeResult()"><span>再次计算</span></a></div>
                         </div>
                     </div>
                 </div>

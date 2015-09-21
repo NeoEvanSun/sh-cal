@@ -4,10 +4,13 @@ app.controller("rootController",['$scope','$modal','$log','$rootScope',"$timeout
         {productName:'单品2',productPrice:17,productMax:60,productMin:60},
         {productName:'单品3',productPrice:26,productMax:70,productMin:1}];
     $scope.product = $rootScope.products;
-    $scope.testTitle = "试试";
     $scope.productNames = [];
+    $scope.productPirces = [];
     $scope.productNames = $rootScope.products.map(function(obj){
         return obj.productName;
+    });
+    $scope.productPirces = $rootScope.products.map(function(obj){
+        return obj.productPrice;
     });
 }]);
 
@@ -17,6 +20,7 @@ app.controller("resultController",['$scope','$rootScope','rootService',function(
     $scope.sumFee = $rootScope.sumCount ;
 
     $scope.executeResults = [];
+    $scope.executeArray = [];
 
     $scope.executeResult = function (){
         $scope.executeResults = [];
@@ -79,7 +83,6 @@ app.controller("resultController",['$scope','$rootScope','rootService',function(
                 keepExecute = sumFee - presentFee <= 0 ? false : true ;
             }
             $scope.executeResults = executeResults;
-            console.log(executeResults);
             $scope.curSumFee = presentFee ;
             if(Math.abs($scope.curSumFee - $scope.sumFee) > parseInt($scope.sumFee*10/1000)){
                 $scope.executeResult();
@@ -87,7 +90,20 @@ app.controller("resultController",['$scope','$rootScope','rootService',function(
                 console.log("不行");
             }
         }
+    }
 
+    $scope.executeSerTimes = function(){
+        $scope.executeArray = [];
+        for(var i =0 ;i <3; i++){
+            $scope.executeResult();
+            $scope.executeArray.push({executeResults:$scope.executeResults,curSumFee:$scope.curSumFee});
+        }
+        console.log($scope.executeArray);
+    }
+
+    $scope.turnActive = function ($index){
+        console.log("in");
+        angular.element($event.target).addClass("col_active")
     }
 }]);
 
