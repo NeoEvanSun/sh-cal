@@ -1,17 +1,11 @@
 app.controller("rootController",['$scope','$modal','$log','$rootScope',"$timeout",function($scope,$modal,$log,$rootScope,$timeout){
     $scope.step = $rootScope.step || 1;
     $rootScope.products = [{productName:'单品1',productPrice:12,productMax:40,productMin:1},
-        {productName:'单品2',productPrice:17,productMax:60,productMin:60},
-        {productName:'单品3',productPrice:26,productMax:70,productMin:1}];
+        {productName:'单品2',productPrice:17,productMax:60000,productMin:60},
+        {productName:'单品3',productPrice:26,productMax:70000,productMin:1}];
     $scope.product = $rootScope.products;
     $scope.productNames = [];
     $scope.productPirces = [];
-    $scope.productNames = $rootScope.products.map(function(obj){
-        return obj.productName;
-    });
-    $scope.productPirces = $rootScope.products.map(function(obj){
-        return obj.productPrice;
-    });
 }]);
 
 
@@ -20,7 +14,7 @@ app.controller("resultController",['$scope','$rootScope','rootService',function(
     $scope.sumFee = $rootScope.sumCount ;
 
     $scope.executeResults = [];
-    $scope.executeArray = [];
+    $scope.executeArray = $rootScope.executeArray || [];
 
     $scope.executeResult = function (){
         $scope.executeResults = [];
@@ -98,11 +92,10 @@ app.controller("resultController",['$scope','$rootScope','rootService',function(
             $scope.executeResult();
             $scope.executeArray.push({executeResults:$scope.executeResults,curSumFee:$scope.curSumFee});
         }
-        console.log($scope.executeArray);
+        $rootScope.executeArray = $rootScope.executeArray;
     }
 
     $scope.turnActive = function ($index){
-        console.log("in");
         angular.element($event.target).addClass("col_active")
     }
 }]);
@@ -125,6 +118,11 @@ app.controller("productListController",function($scope,$modal,$log,$rootScope){
             $log.info("modal dismissed at : "+new Date());
         })
     }
+    $scope.deleteProduct = function (index){
+        $scope.productList.splice(index,1);
+        $rootScope.products = $scope.productList;
+    }
+
     $scope.productList.length ==0 && $scope.open();
 });
 

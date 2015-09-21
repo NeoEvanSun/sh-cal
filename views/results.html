@@ -1,13 +1,11 @@
 <div class="row">
-    <div class="col-sm-5">
-        <Strong class="foo">总价:{{sumCount}} 元</Strong>
-        <h6 class="foo">已有单品</h6>
+
+        <Strong class="foo">已有单品</Strong>
         <div class="tagcloud style3 margin-30">
             <a ng-repeat="product in products" href="#" class="tag-link-1" title="2 topics"><span>{{product.productName}} {{product.productPrice}} 元 {{product.productMin}} ~ {{product.productMax}}</span></a>
         </div>
-    </div>
-    <a class="btn" ng-click="executeSerTimes()"><span >计算</span></a>
-
+        <Strong class="foo">总价:{{sumCount}} 元</Strong>
+        <a class="btn btn-large btn-green" ng-click="executeSerTimes()"><span >计算</span></a>
     <div class="pricing_box price_style1 clearfix">
         <ul>
             <li ng-repeat="exeResult in executeArray" class="price_col price_col_green" ng-class="{col_active:hover}" ng-mouseenter="hover=true" ng-mouseleave="hover=false">
@@ -26,9 +24,9 @@
                                 </ul>
                             </div>
                         </div>
-                        <div class="price_col_foot">
-                            <div class="sign_up"><a  class="btn btn-green btn-large" ng-click="executeResult()"><span>再次计算</span></a></div>
-                        </div>
+                        <!--<div class="price_col_foot">-->
+                            <!--<div class="sign_up"><a  class="btn btn-green btn-large" ng-click="executeSerTimes()"><span>再次计算</span></a></div>-->
+                        <!--</div>-->
                     </div>
                 </div>
             </li>
