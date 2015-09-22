@@ -1,7 +1,7 @@
 app.controller("rootController",['$scope','$modal','$log','$rootScope',"$timeout",function($scope,$modal,$log,$rootScope,$timeout){
     $scope.step = $rootScope.step || 1;
     $rootScope.products = [{productName:'单品1',productPrice:12,productMax:40,productMin:1},
-        {productName:'单品2',productPrice:17,productMax:60000,productMin:60},
+        {productName:'单品2',productPrice:17,productMax:60,productMin:60},
         {productName:'单品3',productPrice:26,productMax:70000,productMin:1}];
     $scope.product = $rootScope.products;
     $scope.productNames = [];
@@ -59,6 +59,8 @@ app.controller("resultController",['$scope','$rootScope','rootService',function(
                         console.log("the product is ["+aryItem.productName+"] realMax ["+theRealMax+"] theMax ["+aryItem.productMax+"]");
                         (theRealMax > aryItem.productMax) && (theRealMax=aryItem.productMax);
                         var plusCount = rootService.getRandom(0,parseInt((sumFee-feenow)/aryItem.productPrice));
+                        ((plusCount + aryItem.count) > aryItem.productMax) && (plusCount = aryItem.productMax-aryItem.count);
+
                         console.log("random add count is ["+plusCount+"]");
                         if(plusCount<0){
                             flag=false;
