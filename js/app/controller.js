@@ -18,73 +18,96 @@ app.controller("resultController",['$scope','$rootScope','rootService',function(
 
     $scope.executeResult = function (){
         $scope.executeResults = [];
-        $scope.curSumFee = 0;
-        var splitProductObj = rootService.splitProducts($scope.products);
-        /*最小量大于1,必须出现的*/
-        var shouldProducts = splitProductObj.shouldProducts;
-        /*必须参与计算*/
-        var mustProducts = splitProductObj.mustProducts;
-        /*可选计算指标*/
-        var choiceProducts = splitProductObj.choiceProducts;
-        /*首次执行先行运算*/
-        var executeResults = splitProductObj.executeResults;
-        var sumFee = $scope.sumFee;
-        var firstFee = 0;
-        executeResults.forEach(function(element,index,array){
-            firstFee += element.sumFee;
-        });
-        if(sumFee > splitProductObj.allMaxFee){
-            alert("输入的单品量不足以完成额度!");
-            return;
-        }
-        sumFee -= firstFee;
-        var presentFee = 0;
-        if(sumFee <= 0) {
-            alert("指标量与总成本冲突");
-        }else if(executeResults.length>0){
-            var keepExecute = true;
-            while(keepExecute) {
-                var canProduct = shouldProducts.concat(choiceProducts);
-                var objIndex = rootService.getRandom(0, canProduct.length);
-                var obj = canProduct[objIndex];
-                /*随机数量*/
-                var objCount = rootService.getRandom(obj.productMin, obj.productMax);
-                var has = false;
-                for (var i = 0; i < executeResults.length; i++) {
-                    if (executeResults[i].productName == obj.productName) {
-                        has = true;
-                        executeResults[i].count += objCount;
-                        executeResults[i].count = executeResults[i].count > executeResults[i].productMax ? executeResults[i].productMax : executeResults[i].count;
-                        executeResults[i].sumFee = executeResults[i].count * executeResults[i].productPrice;
-                    }
-                }
-                if (!has) {
-                    var result = {};
-                    result.productName = obj.productName;
-                    result.count = objCount;
-                    result.productPrice = obj.productPrice;
-                    result.max = obj.productMax;
-                    result.min = obj.productMin;
-                    result.sumFee = result.count * result.productPrice;
-                    result.maxFee = result.max * result.productPrice;
-                    executeResults.push(result);
-                }
+        var maxCount = 0;
+        var minCount = 0;
+        var sumFee=$scope.sumFee;
 
-                executeResults.forEach(function (ele, index, array) {
-                    presentFee += ele.sumFee;
+        var startArray = [];
+        $scope.products.forEach(function(ele,index,array) {
+            maxCount += ele.productPrice * ele.productMax;
+            minCount += ele.productPrice * ele.productMin;
+            if (ele.productMin > 0) {
+                var obj = {};
+                obj.count = ele.productMin;
+                obj.productPrice = ele.productPrice;
+                obj.productMax = ele.productMax;
+                obj.productName = ele.productName;
+                startArray.push(obj);
+            }
+        });
+        console.log("the max ["+maxCount+"] the min ["+minCount+"]");
+        if(sumFee>=minCount&&sumFee<=maxCount){
+            console.log("in area");
+            var flag = true;
+            var feenow = 0;
+            while(flag){
+                var ranIndex = rootService.getRandom(0,$scope.products.length);
+                console.log("random index for items ["+ranIndex+"]");
+                var ranItem = $scope.products[ranIndex];
+                var itemExsits = false;
+
+                feenow = 0;
+                startArray.forEach(function(ele,index,array){
+                    feenow+=(ele.productPrice*ele.count);
                 });
 
-                keepExecute = sumFee - presentFee <= 0 ? false : true ;
+                for(var i=0 ;i<startArray.length;i++){
+                    var aryItem = startArray[i];
+                    if(aryItem.productName == ranItem.productName){
+                        itemExsits = true;
+                        var theRealMax = rootService.getMax(aryItem,sumFee);
+                        console.log("the product is ["+aryItem.productName+"] realMax ["+theRealMax+"] theMax ["+aryItem.productMax+"]");
+                        (theRealMax > aryItem.productMax) && (theRealMax=aryItem.productMax);
+                        var plusCount = rootService.getRandom(0,parseInt((sumFee-feenow)/aryItem.productPrice));
+                        console.log("random add count is ["+plusCount+"]");
+                        if(plusCount<0){
+                            flag=false;
+                            console.log("error ["+parseInt((sumFee-feenow)/aryItem.productPrice)+"] feenow ["+feenow+"]");
+                        }
+                        if(feenow+startArray[i].productPrice*plusCount>sumFee){
+                            console.log("out side! cancel");
+                        }else{
+                            startArray[i].count+=plusCount;
+                        }
+                        break;
+                    }
+                }
+
+                if(!itemExsits){
+                    var obj = {};
+                    obj.count = rootService.getRandom(0,ranItem.productMax<5?ranItem.productMax:5);
+                    obj.productPrice = ranItem.productPrice;
+                    obj.productMax = ranItem.max;
+                    obj.productName = ranItem.name;
+                    if(feenow+obj.productPrice*obj.count>sumFee){
+                        console.log("out side! cancel add");
+                    }else{
+                        startArray.push(obj);
+                    }
+                }
+
+                feenow=0;
+                startArray.forEach(function(ele,index,array){
+                    feenow+=(ele.productPrice*ele.count);
+                });
+
+                if(sumFee-feenow<=rootService.getMinPrice($scope.products)*5){
+                    flag=false;
+                    $scope.curSumFee=feenow;
+                    console.log("the final fee is ["+feenow+"]");
+                }else{
+                    console.log("fee is ["+feenow+"]");
+                }
             }
-            $scope.executeResults = executeResults;
-            $scope.curSumFee = presentFee ;
-            if(Math.abs($scope.curSumFee - $scope.sumFee) > parseInt($scope.sumFee*10/1000)){
-                $scope.executeResult();
-            }else{
-                console.log("不行");
-            }
+            console.log(startArray);
+            startArray.forEach(function(ele,index,array){
+                ele.sumFee= ele.productPrice*ele.count;
+            });
+            $scope.executeResults = startArray;
+        }else{
+            console.log(sumFee+"不在计算区间内");
         }
-    }
+    };
 
     $scope.executeSerTimes = function(){
         $scope.executeArray = [];

@@ -1,10 +1,19 @@
 angular.module('cal').factory("rootService",function(){
     var service={
         getRandom : function (min, max){
-            return Math.floor(min+Math.random()*(max-min));
+            return parseInt(Math.random()*(max-min)+min);
         },
 
-        getMaxNum : function (product,sumFee){
+        getMinPrice: function (items){
+            var minPrice;
+            items.forEach(function(ele,index,array){
+                (index==0 )&& (minPrice=ele.productPrice);
+                (minPrice > ele.productPrice )&& (minPrice = ele.productPrice);
+            });
+            return minPrice;
+        },
+
+        getMax : function (product,sumFee){
             var result = parseInt(sumFee/product.productPrice);
             return result;
         },

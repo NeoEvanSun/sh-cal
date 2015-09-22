@@ -18,15 +18,12 @@
                         <div class="price_col_body clearfix">
                             <div class="price_body_inner" ng-repeat="result in exeResult.executeResults">
                                 <div class="price_body_top">
-                                    <span>{{result.productName}} * {{result.count}} 个 ＝ {{result.sumFee}} 元</span>
+                                    <span>【{{result.productName}}】 {{result.productPrice}} * {{result.count}} 个 ＝ {{result.sumFee}} 元</span>
                                 </div>
                                 <ul>
                                 </ul>
                             </div>
                         </div>
-                        <!--<div class="price_col_foot">-->
-                            <!--<div class="sign_up"><a  class="btn btn-green btn-large" ng-click="executeSerTimes()"><span>再次计算</span></a></div>-->
-                        <!--</div>-->
                     </div>
                 </div>
             </li>
