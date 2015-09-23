@@ -1,8 +1,15 @@
 app.controller("rootController",['$scope','$modal','$log','$rootScope',"$timeout",function($scope,$modal,$log,$rootScope,$timeout){
     $scope.step = $rootScope.step || 1;
-    $rootScope.products = [{productName:'单品1',productPrice:12,productMax:40,productMin:1},
-        {productName:'单品2',productPrice:17,productMax:60,productMin:60},
-        {productName:'单品3',productPrice:26,productMax:70000,productMin:1}];
+    $rootScope.products = [{productName:'单品1',productPrice:15,productMax:20,productMin:1},
+        {productName:'单品2',productPrice:12,productMax:20,productMin:1},
+        {productName:'单品3',productPrice:25,productMax:20,productMin:1},
+        {productName:'单品4',productPrice:13,productMax:20,productMin:1},
+        {productName:'单品5',productPrice:17,productMax:20,productMin:1},
+        {productName:'单品6',productPrice:30,productMax:20,productMin:1},
+        {productName:'单品7',productPrice:22,productMax:20,productMin:1},
+        {productName:'单品8',productPrice:19,productMax:20,productMin:1},
+        {productName:'单品9',productPrice:16,productMax:20,productMin:1}
+    ];
     $scope.product = $rootScope.products;
     $scope.productNames = [];
     $scope.productPirces = [];
@@ -94,12 +101,14 @@ app.controller("resultController",['$scope','$rootScope','rootService',function(
                 });
 
                 if(sumFee-feenow<=rootService.getMinPrice($scope.products)*5){
+
                     flag=false;
                     $scope.curSumFee=feenow;
                     console.log("the final fee is ["+feenow+"]");
                 }else{
                     console.log("fee is ["+feenow+"]");
                 }
+
             }
             console.log(startArray);
             startArray.forEach(function(ele,index,array){
@@ -148,7 +157,52 @@ app.controller("productListController",function($scope,$modal,$log,$rootScope){
         $rootScope.products = $scope.productList;
     }
 
+    $scope.editProduct = function (index){
+        var modalInstance = $modal.open({
+            animation:true,
+            templateUrl:'views/product.html',
+            controller:'productChangeController',
+            size:"sm",
+            windowClass:'productEdit',
+            resolve:{
+                editIndex:function (){
+                    return index;
+                }
+            }
+        });
+        modalInstance.result.then(function(obj){
+            $scope.products[obj.index] =  obj.product;
+            $rootScope.products = $scope.products;
+        })
+    }
+
     $scope.productList.length ==0 && $scope.open();
+});
+
+app.controller("productChangeController",function($scope,$modalInstance,$rootScope,editIndex){
+    var product = $rootScope.products[editIndex];
+    $scope.productName = product.productName;
+    $scope.productPrice = product.productPrice;
+    $scope.productMax = product.productMax;
+    $scope.productMin = product.productMin;
+    $scope.addProduct = function (){
+        if($scope.product_form.$valid){
+            var product = {};
+            product.productName = $scope.productName;
+            product.productPrice = $scope.productPrice;
+            product.productMax = $scope.productMax;
+            product.productMin = $scope.productMin;
+            $modalInstance.close({product:product,index:editIndex});
+        }else{
+            $scope.product_form.$dirty=true;
+            console.log("验证不通过")
+        }
+    };
+
+    $scope.cancel = function(){
+        $modalInstance.dismiss("cancel");
+    }
+
 });
 
 app.controller("productEditController",function($scope,$modalInstance){
