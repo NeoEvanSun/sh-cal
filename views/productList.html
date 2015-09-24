@@ -14,13 +14,13 @@
             <tr ng-repeat="product in productList">
                 <td>{{product.productName}}</td>
                 <td class="center">
-                    <span class="label label-success">{{product.productPrice}}</span>
+                    <span class="label label-success">{{product.productPrice}}元</span>
                 </td>
                 <td class="center">{{product.productMax}}</td>
                 <td class="center">{{product.productMin}}</td>
                 <td>
-                    <a href="#" class="tag-link-2" title="3 topics" ng-click="editProduct($index)"><span>edit</span></a>
-                    <a href="#" class="tag-link-2" title="3 topics" ng-click="deleteProduct($index)"><span>delete</span></a>
+                    <a href="#" class="tag-link-2" title="3 topics" ng-click="editProduct($index)" ><span class="label label-default">编辑</span></a>
+                    <a href="#" class="tag-link-2" title="3 topics" ng-click="deleteProduct($index)" ><span class="label label-danger">删除</span></a>
                 </td>
             </tr>
             </tbody>

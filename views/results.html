@@ -4,8 +4,9 @@
         <div class="tagcloud style3 margin-30">
             <a ng-repeat="product in products" href="#" class="tag-link-1" title="2 topics"><span>{{product.productName}} {{product.productPrice}} 元 {{product.productMin}} ~ {{product.productMax}}</span></a>
         </div>
-        <Strong class="foo">总价:{{sumCount}} 元</Strong>
+        <Strong class="foo">总价:{{sumCount}} 元 </Strong>
         <a class="btn btn-large btn-green" ng-click="executeSerTimes()"><span >计算</span></a>
+        <Strong class="foo">{{errorInfo}}</Strong>
     <div class="pricing_box price_style1 clearfix">
         <ul>
             <li ng-repeat="exeResult in executeArray" class="price_col price_col_green" ng-class="{col_active:hover}" ng-mouseenter="hover=true" ng-mouseleave="hover=false">

@@ -58,4 +58,35 @@ angular.module('cal').factory("rootService",function(){
         }
     }
     return service;
+}).factory("dataService",function(){
+    var service = {
+        getData : function(){
+            try{
+                var dataStr = fs.readFileSync('../caldata.dll','utf-8');
+                if($.trim(dataStr)==""){
+                    return null;
+                }else {
+                    console.log(dataStr);
+                    console.log(JSON.parse(dataStr));
+                    return JSON.parse(dataStr);
+                }
+            }catch(e){
+                console.log(e);
+                return null;
+            }
+
+        },
+        saveData : function(obj){
+            console.log(obj);
+            fs.writeFile('../caldata.dll',JSON.stringify(obj),function(err) {
+                if(err){
+                    alert(err);
+                }else{
+                    console.log("ok");
+                }
+            })
+        }
+    }
+    return service;
 });
+

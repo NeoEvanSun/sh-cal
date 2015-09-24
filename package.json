@@ -1,4 +1,10 @@
 {
   "name": "application-name",
-  "main": "index.html"
+  "main": "main.html",
+  "window":{
+    "width":800,
+    "height":500,
+    "toolbar":false,
+    "resizable":false
+  }
 }

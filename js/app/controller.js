@@ -1,27 +1,29 @@
-app.controller("rootController",['$scope','$modal','$log','$rootScope',"$timeout",function($scope,$modal,$log,$rootScope,$timeout){
+var fs = require("fs");
+var filePath = require("path");
+app.controller("rootController",['$scope','$modal','$log','$rootScope',"$timeout",'dataService',function($scope,$modal,$log,$rootScope,$timeout,dataService){
+    var fileData = dataService.getData();
+    if(fileData){
+        $rootScope.products = fileData.products;
+        $rootScope.executeArray = fileData.executeArray;
+        $rootScope.sumCount = fileData.sumCount;
+    }
     $scope.step = $rootScope.step || 1;
-    $rootScope.products = [{productName:'单品1',productPrice:15,productMax:20,productMin:1},
-        {productName:'单品2',productPrice:12,productMax:20,productMin:1},
-        {productName:'单品3',productPrice:25,productMax:20,productMin:1},
-        {productName:'单品4',productPrice:13,productMax:20,productMin:1},
-        {productName:'单品5',productPrice:17,productMax:20,productMin:1},
-        {productName:'单品6',productPrice:30,productMax:20,productMin:1},
-        {productName:'单品7',productPrice:22,productMax:20,productMin:1},
-        {productName:'单品8',productPrice:19,productMax:20,productMin:1},
-        {productName:'单品9',productPrice:16,productMax:20,productMin:1}
-    ];
     $scope.product = $rootScope.products;
     $scope.productNames = [];
     $scope.productPirces = [];
+
+
 }]);
 
 
-app.controller("resultController",['$scope','$rootScope','rootService',function($scope,$rootScope,rootService){
+app.controller("resultController",['$scope','$rootScope','rootService','dataService',function($scope,$rootScope,rootService,dataService){
     $scope.products = $rootScope.products || [];
     $scope.sumFee = $rootScope.sumCount ;
 
     $scope.executeResults = [];
     $scope.executeArray = $rootScope.executeArray || [];
+
+    $scope.errorInfo;
 
     $scope.executeResult = function (){
         $scope.executeResults = [];
@@ -116,15 +118,18 @@ app.controller("resultController",['$scope','$rootScope','rootService',function(
             });
             $scope.executeResults = startArray;
         }else{
-            console.log(sumFee+"不在计算区间内");
+            $scope.errorInfo= sumFee+"不在计算区间内,计算区间 【"+minCount+" ~ "+maxCount+"】";
         }
     };
 
     $scope.executeSerTimes = function(){
+        $scope.errorInfo=null;
         $scope.executeArray = [];
         for(var i =0 ;i <3; i++){
             $scope.executeResult();
-            $scope.executeArray.push({executeResults:$scope.executeResults,curSumFee:$scope.curSumFee});
+            if($scope.curSumFee){
+                $scope.executeArray.push({executeResults:$scope.executeResults,curSumFee:$scope.curSumFee});
+            }
         }
         $rootScope.executeArray = $rootScope.executeArray;
     }
@@ -132,10 +137,20 @@ app.controller("resultController",['$scope','$rootScope','rootService',function(
     $scope.turnActive = function ($index){
         angular.element($event.target).addClass("col_active")
     }
+
+
+    $scope.$watch("executeArray",function(newval){
+        console.log("executeArray");
+        var obj = {};
+        obj.products= $rootScope.products;
+        obj.executeArray=newval;
+        obj.sumCount=$rootScope.sumCount;
+        dataService.saveData(obj);
+    })
 }]);
 
-app.controller("productListController",function($scope,$modal,$log,$rootScope){
-    $scope.productList =  $scope.products = $rootScope.products ? $rootScope.products :[];
+app.controller("productListController",function($scope,$modal,$log,$rootScope,dataService){
+    $scope.productList =  $rootScope.products ? $rootScope.products :[];
     $scope.open = function(size){
         var modalInstance = $modal.open({
             animation:true,
@@ -148,13 +163,18 @@ app.controller("productListController",function($scope,$modal,$log,$rootScope){
         modalInstance.result.then(function(product){
             $scope.productList.push(product);
             $rootScope.products = $scope.productList;
+            var obj = {};
+            obj.products= $rootScope.products;
+            obj.executeArray= $rootScope.executeArray;
+            obj.sumCount=$rootScope.sumCount;
+            dataService.saveData(obj);
         },function(){
             $log.info("modal dismissed at : "+new Date());
         })
     }
     $scope.deleteProduct = function (index){
         $scope.productList.splice(index,1);
-        $rootScope.products = $scope.productList;
+        $rootScope.products.splice(index,1);
     }
 
     $scope.editProduct = function (index){
@@ -171,12 +191,18 @@ app.controller("productListController",function($scope,$modal,$log,$rootScope){
             }
         });
         modalInstance.result.then(function(obj){
-            $scope.products[obj.index] =  obj.product;
-            $rootScope.products = $scope.products;
+            $scope.productList[obj.index] =  obj.product;
+            $rootScope.products = $scope.productList;
+            var obj = {};
+            obj.products= $rootScope.products;
+            obj.executeArray= $rootScope.executeArray;
+            obj.sumCount=$rootScope.sumCount;
+            dataService.saveData(obj);
         })
     }
 
     $scope.productList.length ==0 && $scope.open();
+
 });
 
 app.controller("productChangeController",function($scope,$modalInstance,$rootScope,editIndex){
@@ -227,9 +253,16 @@ app.controller("productEditController",function($scope,$modalInstance){
 
 });
 
-app.controller("sumCountController",function($scope,$rootScope){
+app.controller("sumCountController",function($scope,$rootScope,dataService){
     $scope.sumCount = $rootScope.sumCount || 0;
-    $scope.$watch('sumCount',function(newValue,oldValue){
-        $rootScope.sumCount = newValue;
+
+    $scope.$watch("sumCount",function(newval){
+        console.log("sumCount");
+        $rootScope.sumCount = newval;
+        var obj = {};
+        obj.products= $rootScope.products;
+        obj.executeArray=$rootScope.executeArray;
+        obj.sumCount=$rootScope.sumCount;
+        dataService.saveData(obj);
     })
 });
